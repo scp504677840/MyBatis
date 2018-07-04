@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!--AccountInfo getAccountInfoByNameAndBalance(@Param("name") String name, BigDecimal balance);
+
+    AccountInfo getAccountInfoByNameAndBalance(String name, @Param("a") AccountInfo accountInfo);
+
+    AccountInfo getAccountInfoByIds(Collection<BigInteger> ids);
+
+    AccountInfo getAccountInfoByIds(List<BigInteger> ids);
+
+    AccountInfo getAccountInfoByIds(Set<BigInteger> ids);-->
+
+    <select id="getAccountInfoByNameAndBalance" resultType="main.entities.AccountInfo">
+        select * from account_info where name = ${name} and balance = ${param2}
+    </select>
+
+    <select id="getAccountInfoByNameAndBalance" resultType="main.entities.AccountInfo">
+        select * from account_info where name = ${param1} and balance = ${a.balance}
+    </select>
+
+    <select id="getAccountInfoByIds" resultType="main.entities.AccountInfo">
+        select * from account_info where id = ${collection[0]}
+    </select>
+
+    <select id="getAccountInfoByIds" resultType="main.entities.AccountInfo">
+        select * from account_info where id = ${list[0]}
+    </select>
+
+    <select id="getAccountInfoByIds" resultType="main.entities.AccountInfo">
+        select * from account_info where id = ${parma1[0]]}
+    </select>
+
+</mapper>
