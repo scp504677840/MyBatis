@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <!--
+    XML 配置文件（configuration XML）中包含了对 MyBatis 系统的核心设置，
+    包含获取数据库连接实例的数据源（DataSource）和决定事务作用域和控制方式的事务管理器（TransactionManager）。
+    -->
+
+    <settings>
+        <!-- 全局启用或禁用此配置下任何映射器中配置的任何高速缓存 -->
+        <setting name="cacheEnabled" value="false"/>
+        <!-- 设置驱动程序等待数据库响应的秒数 -->
+        <setting name="defaultStatementTimeout" value="5"/>
+        <!-- 启用从经典数据库列名A_COLUMN到驼峰式经典Java属性名称aColumn的自动映射 -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!-- 允许JDBC支持生成的密钥。 需要兼容的驱动程序。如果设置为true，此设置会强制使用生成的键-->
+        <setting name="useGeneratedKeys" value="true"/>
+    </settings>
+
+    <!--
+    environment 元素体中包含了事务管理和连接池的配置。
+    -->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="username" value="root"/>
+                <property name="password" value=“123456”/>
+                <property name="url" value="jdbc:mysql://192.168.0.101:3306/lab"/>
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <!--
+    mappers 元素则是包含一组 mapper 映射器（这些 mapper 的 XML 文件包含了 SQL 代码和映射定义信息）。
+    -->
+    <mappers>
+        <mapper class="main.mapper.AccountInfoMapper"/>
+    </mappers>
+
+</configuration>
