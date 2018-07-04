@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!--
+    jdbcTypeForNull
+    当没有为参数提供特定的 JDBC 类型时，为空值指定 JDBC 类型。
+    某些驱动需要指定列的 JDBC 类型，多数情况直接用一般类型即可，比如 NULL、VARCHAR 或 OTHER。
+    有两种解决方案：
+    1.在全局配置文件中settings配置节点中配置<setting name="jdbcTypeForNull" value="NULL"/>
+    2.在SQL语句中#取值时，后面加上jdbcType=NULL，如：select * from account_info where name = #{name,jdbcType=NULL}
+    -->
+    <select id="getAccountInfoByName" resultType="main.entities.AccountInfo">
+        select *
+        from account_info
+        where name = #{name,jdbcType=NULL}
+    </select>
+
+</mapper>
