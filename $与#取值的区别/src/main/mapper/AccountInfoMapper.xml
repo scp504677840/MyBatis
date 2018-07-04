@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!--
+    $与# 取值的区别
+    $：直接取值。select * from account_info where id = 2
+    #：预编译。select * from account_info where id = ?
+    1.$不可以防止SQL注入，存在安全问题。
+    2.$只适合用在非占位符的场景，如下所示：select * from account_info where name like %o% and balance = ?
+    下面我们不可以用#取值，因为我们的SQL不可以是这样的：select * from account_info where name like %?% and balance = ?
+    -->
+    <select id="getAccountInfoByNameAndBalance" resultType="main.entities.AccountInfo">
+        select *
+        from account_info
+        where name like '%${name}%' and balance = #{balance}
+    </select>
+
+</mapper>
