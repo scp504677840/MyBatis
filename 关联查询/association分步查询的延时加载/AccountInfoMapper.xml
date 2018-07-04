@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!--
+    分步查询延时加载：除了写SQL的xml，另外需要在全局配置文件中配置以下两个属性。
+    <!-- 延迟加载 -->
+    <setting name="lazyLoadingEnabled" value="true"/>
+    <!-- 当开启时，任何方法的调用都会加载该对象的所有属性。否则，每个属性会按需加载 -->
+    <setting name="aggressiveLazyLoading" value="false"/>
+    -->
+    <resultMap id="MyAccountInfo" type="main.entities.AccountInfo">
+        <!-- 指定主键 -->
+        <id column="id" property="id"/>
+        <!-- 指定普通列 -->
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="name" property="name"/>
+        <result column="balance" property="balance"/>
+
+        <!--
+        property：当前类中的属性（此时是Department）
+        select：表明当前属性是调用select指定的方法查出的结果
+        column：指定哪一列的值传给这个方法
+        -->
+        <association property="dept" select="main.mapper.DepartmentMapper.getDepartmentById" column="d_id">
+        </association>
+    </resultMap>
+
+    <!-- resultMap与resultType二选一，不能同时存在 -->
+    <select id="getAccountInfoById" resultMap="MyAccountInfo">
+        select *
+        from account_info
+        where id = #{id}
+    </select>
+
+</mapper>
