@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!--
+    foreach
+    遍历标签
+    collection：集合元素
+    item：每个条目
+    separator：分隔符
+    open：前缀
+    close：后缀
+    index：索引
+    -->
+    <select id="getAccountInfoForeach" resultType="main.entities.AccountInfo">
+        select * from account_info where id in
+        <foreach collection="ids" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <!--
+    批量插入
+    -->
+    <insert id="batchSaveAccountInfos" parameterType="list">
+        insert into account_info
+        (gmt_create, gmt_modified, name, balance)
+        values
+        <foreach collection="accountInfos" item="accountInfo" separator=",">
+            (#{accountInfo.gmtCreate},#{accountInfo.gmtModified},#{accountInfo.name},#{accountInfo.balance})
+        </foreach>
+    </insert>
+
+</mapper>
