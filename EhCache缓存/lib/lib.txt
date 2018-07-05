@@ -1,0 +1,10 @@
+#mybatis
+mybatis-3.4.6.jar
+
+#jdbc
+mysql-connector-java-8.0.11.jar
+
+#ehcache
+ehcache-core-2.6.8.jar
+slf4j-api-1.6.1.jar
+mybatis-ehcache-1.0.3.jar
