@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <resultMap id="MyAccountInfo" type="main.entities.AccountInfo">
+        <!-- 指定主键 -->
+        <id column="id" property="id"/>
+        <!-- 指定普通列 -->
+        <result column="gmt_create" property="gmtCreate"/>
+        <result column="gmt_modified" property="gmtModified"/>
+        <result column="name" property="name"/>
+        <result column="balance" property="balance"/>
+
+        <!--
+        discriminator鉴别器
+        javaType：列值对应的java类型
+        column：指定判定的列名
+        -->
+        <discriminator javaType="string" column="name">
+            <!--
+            value：匹配项。
+            resultType：指定的封装类型。
+            -->
+            <case value="Tom" resultType="main.entities.AccountInfo">
+                <!--
+                将创建时间赋值给修改时间
+                column：列名
+                property：属性
+                -->
+                <result column="gmt_create" property="gmtModified"/>
+            </case>
+        </discriminator>
+    </resultMap>
+
+    <!-- resultMap与resultType二选一，不能同时存在 -->
+    <select id="getAccountInfoById" resultMap="MyAccountInfo">
+        select *
+        from account_info
+        where id = #{id}
+    </select>
+
+</mapper>
