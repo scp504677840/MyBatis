@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!--
+    bind
+    bind 元素可以从 OGNL 表达式中创建一个变量并将其绑定到上下文。
+    -->
+    <select id="getAccountInfoLikeName" resultType="main.entities.AccountInfo">
+        <bind name="_name" value="'%'+name+'%'"/>
+        select * from account_info where name like #{_name}
+    </select>
+
+</mapper>
