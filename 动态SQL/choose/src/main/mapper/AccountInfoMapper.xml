@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!--
+    choose
+    有时我们不想应用到所有的条件语句，而只想从中择其一项。
+    针对这种情况，MyBatis 提供了 choose 元素，它有点像 Java 中的 switch 语句。
+    为什么需要choose标签？
+    案例：如果传进来balance就按balance查询，如果传进来name就按name查询。
+    解决方法：使用choose标签
+    when：匹配项
+    otherwise：当没有满足条件的匹配项时，使用此标签体中的SQL
+    -->
+    <select id="getAccountInfoWithName" resultType="main.entities.AccountInfo">
+        select *
+        from account_info
+        <where>
+            <choose>
+                <when test="balance!=null and balance > 0">
+                    balance > ${balance}
+                </when>
+                <when test="name != null and name != ''">
+                    name like '%${name}%'
+                </when>
+                <otherwise>
+                    balance > 10000
+                </otherwise>
+            </choose>
+        </where>
+    </select>
+
+</mapper>
