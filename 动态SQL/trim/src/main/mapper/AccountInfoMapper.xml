@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!--
+    trim
+    为什么需要trim标签？
+    案例：
+    where
+    <if test="balance!=null and balance > 0">
+        balance>${balance} and
+    </if>
+    <if test="name != null and name != ''">
+        name like '%${name}%' and
+    </if>
+    问题：如果我们将and放在SQL语句的后面，那么我们拼装的SQL就有问题，如：where name like %T% and
+    也就是后面多出的and 或者 or，where标签是不能解决的。
+    解决方法：使用trim标签
+    trim标签体中是整个字符串拼装后的结果。
+    prefix：前缀。将整个SQL拼装后的结果加一个前缀。如：name like %T% -> where name like %T%
+    prefixOverrides：前缀覆盖。去掉整个SQL拼装后的结果前面多余的字符。如：and name like %T% -> name like %T%
+    suffix：后缀。将整个SQL拼装后的结果加一个后缀。如：name like %T% -> name like %T% and
+    suffixOverrides：后缀覆盖。去掉整个SQL拼装后的结果后面多余的字符。如：name like %T% and -> name like %T%
+    一般很少会用到suffix和suffixOverrides
+    -->
+    <select id="getAccountInfoWithName" resultType="main.entities.AccountInfo">
+        select *
+        from account_info
+        <trim prefix="WHERE" prefixOverrides="AND|OR">
+            <if test="balance!=null and balance > 0">
+                or balance>${balance}
+            </if>
+            <if test="name != null and name != ''">
+                and name like '%${name}%'
+            </if>
+        </trim>
+    </select>
+
+</mapper>
