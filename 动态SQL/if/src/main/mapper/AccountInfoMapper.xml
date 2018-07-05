@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main.mapper.AccountInfoMapper">
+
+    <!-- resultMap与resultType二选一，不能同时存在 -->
+    <select id="getAccountInfoWithName" resultType="main.entities.AccountInfo">
+        select *
+        from account_info
+        where balance>${balance}
+        <if test="name != null and name != ''">
+            and name like '%${name}%'
+        </if>
+    </select>
+
+</mapper>
